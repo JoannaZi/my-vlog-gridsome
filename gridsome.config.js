@@ -21,9 +21,9 @@ module.exports = {
         apiURL: process.env.GRIDSOME_API_URL,
         queryLimit: 1000,//default to 100，查询的最大数据条数限制
         // contentTypes: ['article','user'] //要查询的数据的类型
-        contentTypes: ['post','tag'] ,//生成的集合的名字是 typeName+contentTypes ，这里的就是StrapiPost
+        contentTypes: ['post','tag','blog','project','following','follower'] ,//生成的集合的名字是 typeName+contentTypes ，这里的就是StrapiPost
         // typeName:'Strapi',
-        singleTypes: ['general'], //单个节点
+        singleTypes: ['general','vblog'], //单个节点
       //Possibility to login with a Strapi user,
       //when content types are not publicly available (optional)
         // loginData: { //受保护的数据，需登录后才能看到

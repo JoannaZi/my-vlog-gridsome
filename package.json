@@ -1,5 +1,5 @@
 {
-  "name": "my-gridsome-site",
+  "name": "my-Vblog",
   "private": true,
   "scripts": {
     "build": "gridsome build",
@@ -13,7 +13,9 @@
     "@gridsome/transformer-remark": "^0.6.3",
     "axios": "^0.20.0",
     "bootstrap": "^4.5.3",
+    "element-ui": "^2.13.2",
     "gridsome": "^0.7.0",
-    "markdown-it": "^12.0.0"
+    "markdown-it": "^12.0.0",
+    "vuex": "^3.5.1"
   }
 }

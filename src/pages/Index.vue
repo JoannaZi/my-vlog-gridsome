@@ -1,108 +1,65 @@
 <template>
-  <Layout>
-   
+<Layout>
 
-  <!-- Page Header -->
-  <header class="masthead" :style="{backgroundImage: `url(${GRIDSOME_API_URL+ general.cover.url})`}">
-    <div class="overlay"></div>
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="site-heading">
-            <h1>{{general.title}}</h1>
-            <span class="subheading">{{general.subtitle}}</span>
-          </div>
-        </div>
-      </div>
+    <div style="min-height: 600px" v-loading="loading">
+        <el-card shadow="never" style="min-height: 400px" v-if="blog.id">
+            <div slot="header">
+                <span>{{blog.title}}</span>
+            </div>
+            <div style="font-size: 0.9rem;line-height: 1.5;color: #606c71;">
+                发布 {{blog.createTime}}
+                <br> 更新 {{blog.updateTime}}
+            </div>
+            <div style="font-size: 1.1rem;line-height: 1.5;color: #303133;border-bottom: 1px solid #E4E7ED;padding: 5px 0px 5px 0px">
+                <pre style="font-family: '微软雅黑'">{{blog.description}}</pre>
+            </div>
+            <div v-html="blog.content" class="markdown-body" style="padding-top: 20px"></div>
+        </el-card>
+        <el-card shadow="never" style="margin-bottom: 20px;padding: 20px 0px 20px 0px;text-align: center" v-if="!blog.id">
+            <font style="font-size: 30px;color:#dddddd ">
+                <b>没有更新 ╮(๑•́ ₃•̀๑)╭</b>
+            </font>
+        </el-card>
     </div>
-  </header>
-
-  <!-- Main Content -->
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-md-10 mx-auto">
-        <div class="post-preview" v-for="edge in $page.posts.edges" :key="edge.node.id">
-          <g-link :to="'/post/'+edge.node.id">
-            <h2 class="post-title">
-              {{edge.node.title}}
-            </h2>
-            <!-- <h3 class="post-subtitle">
-              Problems look mighty small from 150 miles up
-            </h3> -->
-          </g-link>
-          <p class="post-meta">Posted by
-            <a href="#">author</a>
-            on {{edge.node.created_at}}</p>
-            <p><span v-for="tag in edge.node.tags" :key="tag.id"> <g-link :to="'/tag/'+tag.id">{{tag.title}}</g-link>&nbsp;&nbsp;</span></p>
-             <hr>
-        </div>
-       
-       
-        <!-- Pager -->
-        <!-- <div class="clearfix">
-          <a class="btn btn-primary float-right" href="#">Older Posts &rarr;</a>
-        </div> -->
-        <pager :info="$page.posts.pageInfo"/>
-      </div>
-    </div>
-  </div>
-
-  <hr>
-
- 
   </Layout>
+
 </template>
 <page-query>
-query ($page:Int){
-  posts:allStrapiPost (perPage:5, page: $page) @paginate{
-    pageInfo {
-      totalPages
-      currentPage
-    }
-    edges {
-      node {
+ query {
+  blog: allStrapiBlog{
+    edges{
+      node{
         id
         title
         content
-        tags{
-          id
-          title
-        }
+        description
         created_at
+        updated_at
       }
     }
   }
- 
-    general: allStrapiGeneral {
-      edges {
-        node {
-          id
-          cover { 
-            url
-          }
-          title
-          subtitle 
-        }
-      }
-    } 
-  }
+}
+
   
 </page-query>
 <script>
-import { Pager } from 'gridsome'
 export default {
   name:'IndexPage',
-  metaInfo: {
-    title: 'Hello, world!'
-  },
   components:{
-    Pager
+     
+  },
+  data(){
+    return {
+      loading: false
+    }
   },
   computed: {
-    general () {
-      return this.$page.general.edges[0].node
+    blog() {
+      return this.$page.blog.edges[0].node
     }
   }
+
+     
 }
 </script>
 
